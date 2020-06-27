@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {PureComponent} from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import {name} from '../reducers';
@@ -6,34 +6,32 @@ import Motel from './Motel';
 import * as action from '../actions';
 import {Spinner} from 'native-base';
 import {View} from 'react-native';
-import {isEmpty} from 'lodash';
-function Container(props) {
-  useEffect(() => {
-    const {actions, motels} = props;
-    if (isEmpty(motels)) {
-      actions.fetchAllMotel();
-    }
-  });
 
-  const {isLoading} = props;
-  if (isLoading) {
+class Container extends PureComponent {
+  componentDidMount() {
+    this.props.actions.fetchAllMotel();
+  }
+
+  render() {
+    const {isLoading} = this.props;
+    if (isLoading) {
+      return (
+        <View>
+          <Spinner color="red" />
+        </View>
+      );
+    }
     return (
-      <View>
-        <Spinner color="red" />
-      </View>
+      <React.Fragment>
+        <Motel {...this.props} />
+      </React.Fragment>
     );
   }
-  return (
-    <React.Fragment>
-      <Motel {...props} />
-    </React.Fragment>
-  );
 }
 
 function mapStateToProps(state) {
   return {
     ...state[name],
-    isLogin: state.Login.isLogin,
   };
 }
 function mapDispatchToProps(dispatch) {

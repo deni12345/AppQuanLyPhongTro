@@ -12,13 +12,6 @@ import {Provider} from 'react-redux';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 
-///Motel
-import CreateMotel from './src/views/Motel/component/CreateMotel';
-
-//customer
-import ControlContact from './src/views/Customer/component/ControlContact';
-import ControlCustomer from './src/views/Customer/component/ControlCustomer';
-
 const Tab = createBottomTabNavigator();
 
 const HomeStack = createStackNavigator();
@@ -39,6 +32,8 @@ function HomeStackScreen({navigation, props}) {
           ),
         }}
       />
+      <HomeStack.Screen name="Motel" component={Motel} />
+      <HomeStack.Screen name="Customer" component={Customer} />
       <HomeStack.Screen name="Login" component={Login} />
     </HomeStack.Navigator>
   );
@@ -62,7 +57,9 @@ function MotelStackScreen({navigation, props}) {
           ),
         }}
       />
-      <MotelStack.Screen name="CreateMotel" component={CreateMotel} />
+      <MotelStack.Screen name="Home" component={Home} />
+      <MotelStack.Screen name="Customer" component={Customer} />
+      <MotelStack.Screen name="Login" component={Login} />
     </MotelStack.Navigator>
   );
 }
@@ -85,11 +82,9 @@ function CustomerStackScreen({navigation, props}) {
           ),
         }}
       />
-      <CustomerStack.Screen name="controlContact" component={ControlContact} />
-      <CustomerStack.Screen
-        name="controlCustomer"
-        component={ControlCustomer}
-      />
+      <CustomerStack.Screen name="Home" component={Home} />
+      <CustomerStack.Screen name="Motel" component={Motel} />
+      <CustomerStack.Screen name="Login" component={Login} />
     </CustomerStack.Navigator>
   );
 }
@@ -138,10 +133,9 @@ export default class App extends PureComponent {
       <Provider store={store}>
         <Fragment>
           <NavigationContainer>
-            {/* <Drawer.Navigator initialRouteName="Home"> */}
-              {/* <Drawer.Screen name="AppPage" component={AppPage} /> */}
-            {/* </Drawer.Navigator> */}
-            <AppPage />
+            <Drawer.Navigator initialRouteName="Home">
+              <Drawer.Screen name="AppPage" component={AppPage} />
+            </Drawer.Navigator>
           </NavigationContainer>
         </Fragment>
       </Provider>

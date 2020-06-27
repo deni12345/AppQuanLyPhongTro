@@ -14,41 +14,29 @@ const initialState = freeze({
 export default handleActions(
   {
     [actions.loginSuccess]: (state, action) => {
-      action.payload;
       return freeze({
         ...state,
         isLoading: false,
-        data: action.payload.data,
-        isLogin: true,
+        data: action.payload,
       });
     },
     [actions.login]: (state, action) => {
       return freeze({
         ...state,
         isLoading: true,
-        data: action.payload.data,
+        data: action.payload,
+      });
+    },
+    [actions.handleLogin]: (state, action) => {
+      return freeze({
+        ...state,
         isLogin: !state.isLogin,
       });
     },
-    [actions.editAcountSuccess]: (state, action) => {
+    [actions.handleCreate]: (state, action) => {
       return freeze({
         ...state,
-        isLoading: false,
-        data: action.payload.data,
-      });
-    },
-    [actions.handleInputChange]: (state, action) => {
-      const event = action.payload;
-      const target = event.target;
-      const value = target.type === 'checkbox' ? target.checked : target.value;
-      const name = target.name;
-      return freeze({
-        ...state,
-        message: initialState.message,
-        data: {
-          ...state.data,
-          [name]: value,
-        },
+        isCreate: !state.isCreate,
       });
     },
   },

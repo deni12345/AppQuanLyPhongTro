@@ -1,39 +1,31 @@
-import React, {useEffect} from 'react';
+import React, {PureComponent} from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import {name} from '../reducers';
 import * as action from '../actions';
-import Customers from './Customers.js';
-import {isEmpty} from 'lodash';
+import Login from './Login.js';
 
-function Container(props) {
-  const {customers, contacts, motels, actions} = props;
-  useEffect(() => {
-    if (isEmpty(customers)) {
-      actions.fetchAllCustomers();
-    }
-    if (isEmpty(contacts)) {
-      actions.fetchAllContacts();
-    }
-    if (isEmpty(motels)) {
-      actions.fetchAllMotels();
-    }
-  });
-  const {isLoading} = props;
-  if (isLoading) {
-    return <div className="loading" />;
+class Container extends PureComponent {
+  componentDidMount() {
+    this.props.actions.login();
   }
-  return (
-    <React.Fragment>
-      <Customers {...props} />
-    </React.Fragment>
-  );
+
+  render() {
+    const {isLoading} = this.props;
+    if (isLoading) {
+      // return <div className="loading" />;
+    }
+    return (
+      <React.Fragment>
+        <Login {...this.props} />
+      </React.Fragment>
+    );
+  }
 }
 
 function mapStateToProps(state) {
   return {
     ...state[name],
-    isLogin: state.Login.isLogin,
   };
 }
 function mapDispatchToProps(dispatch) {

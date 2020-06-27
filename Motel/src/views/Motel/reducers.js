@@ -6,7 +6,7 @@ export const name = 'Motel';
 
 const initialState = freeze({
   data: {},
-  motels: [],
+  motel: [],
   isLoading: false,
   isMotel: false,
   isCreate: false,
@@ -15,17 +15,29 @@ const initialState = freeze({
 export default handleActions(
   {
     [actions.fetchAllMotelSuccess]: (state, action) => {
-      console.log("lol")
+      console.log('reducer', action);
       return freeze({
         ...state,
         isLoading: false,
-        motels: action.payload.data,
+        motel: action.payload,
       });
     },
-    [actions.clear]: (state, action) => {
+    [actions.FetchAllMotel]: (state, action) => {
       return freeze({
         ...state,
-        motels: [],
+        isLoading: true,
+      });
+    },
+    [actions.handleMotel]: (state, action) => {
+      return freeze({
+        ...state,
+        isMotel: !state.isMotel,
+      });
+    },
+    [actions.handleCreate]: (state, action) => {
+      return freeze({
+        ...state,
+        isCreate: !state.isCreate,
       });
     },
   },
