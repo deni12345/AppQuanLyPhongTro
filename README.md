@@ -1,2 +1,2 @@
 # AppQuanLyPhongTro
-App về quảng lý phòng trọ
+App về quản lý phòng trọ
