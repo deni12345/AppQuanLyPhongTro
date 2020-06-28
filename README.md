@@ -1,9 +1,9 @@
 # AppQuanLyPhongTro 
 
 BÁO CÁO ĐỒ ÁN MÔN HỌC
-    Lập trình trên thiết bị di động
+	Lập trình trên thiết bị di động
 ĐỀ TÀI
-    ỨNG DỤNG QUẢN LÝ PHÒNG TRỌ
+	ỨNG DỤNG QUẢN LÝ PHÒNG TRỌ
 
 	Giảng viên hướng dẫn: Thầy Huỳnh Tuấn Anh
   Lớp: 	SE346.K21.PMCL
