@@ -14,7 +14,6 @@ import ListCustomer from './ListCustomer';
 import ListContact from './ListContact';
 
 export default function SegmentOutsideHeaderExample(props) {
-  // const [isEdit, setEdit] = useState(false);
   const {actions, tabs, isLogin, navigation} = props;
   if (isLogin === true) {
     return (
@@ -24,12 +23,12 @@ export default function SegmentOutsideHeaderExample(props) {
             first
             active={tabs === 'customers'}
             onPress={() => actions.onChangeTab({value: 'customers'})}>
-            <Text>Danh Sách Kháh Hàng</Text>
+            <Text>Khách Hàng</Text>
           </Button>
           <Button
             active={tabs === 'contacts'}
             onPress={() => actions.onChangeTab({value: 'contacts'})}>
-            <Text>Danh Sách Hợp Đồng</Text>
+            <Text>Hợp Đồng</Text>
           </Button>
         </Segment>
         {tabs === 'customers' ? (

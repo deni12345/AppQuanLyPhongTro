@@ -6,10 +6,10 @@ export const name = 'Home';
 
 const initialState = freeze({
   data: {},
-  isLoading: false,
+  isloading: false,
   payment: [],
-  contacts: [],
-  motels: [],
+  receipt: [],
+  motels:[],
   tabs: 'Payments',
 });
 
@@ -18,7 +18,6 @@ export default handleActions(
     [actions.fetchAllPayment]: (state, action) => {
       return freeze({
         ...state,
-        data: action.payload,
         isloading: true,
       });
     },
@@ -29,11 +28,11 @@ export default handleActions(
         payment: action.payload.data,
       });
     },
-    [actions.fetchAllContactsSuccess]: (state, action) => {
+    [actions.fetchAllReceiptSuccess]: (state, action) => {
       return freeze({
         ...state,
         isloading: false,
-        contacts: action.payload.data,
+        receipt: action.payload.data,
       });
     },
     [actions.fetchAllMotelsSuccess]: (state, action) => {

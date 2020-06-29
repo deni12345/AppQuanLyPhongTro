@@ -1,4 +1,6 @@
-import React, {useState, useEffect, Fragment} from 'react';
+/* eslint-disable react-native/no-inline-styles */
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, {useState, useEffect} from 'react';
 import {
   Container,
   Card,
@@ -12,14 +14,12 @@ import {
 import DatePicker from 'react-native-datepicker';
 
 import {get, isEmpty} from 'lodash';
-import * as API from '../../../apis/home';
+import * as API from '../../../apis/customer';
 export default function CardMotesl(props) {
   const initState = {
     name: String,
-    quantityPower: String,
-    quantityWater: String,
-    prices: Number,
-    pricesOther: Number,
+    birthDay: '',
+    note: String,
   };
   const [input, handleInputChange] = useState(Object);
   const [isEdit, setEdit] = useState(false);
@@ -27,22 +27,28 @@ export default function CardMotesl(props) {
     try {
       let res = {};
       if (isEdit) {
-        res = await API.editPayment(input);
+        res = await API.editCustomer(input);
       } else {
-        res = await API.createPayment(input);
+        res = await API.createCustomer(input);
       }
-      console.log('success', res.data);
+      navigation.push('Customer', {newData: res.data});
     } catch (err) {
       console.log('errros', err);
     }
   };
   const {navigation, route} = props;
+  const {name, birthDay, note, _id} = route.params.data;
   useEffect(() => {
     if (isEmpty(get(route, 'params.data', ''))) {
       handleInputChange({...initState});
       setEdit(false);
     } else {
-      handleInputChange({...route.params.data});
+      handleInputChange({
+        _id,
+        name: name,
+        // birthDay: JSON.stringify(birthDay),
+        note: note,
+      });
       setEdit(true);
     }
   }, [props]);
@@ -57,27 +63,29 @@ export default function CardMotesl(props) {
             onChangeText={e => handleInputChange({...input, name: e})}
           />
         </Item>
-        <DatePicker
-          style={{width: 400}}
-          date={input.birthDay}
-          mode="date"
-          placeholder="Ngày sinh"
-          format="DD-MM-YYYY"
-          confirmBtnText="Lưu Lại"
-          cancelBtnText="Huỷ"
-          customStyles={{
-            dateIcon: {
-              position: 'absolute',
-              left: 0,
-              top: 4,
-              marginLeft: 0,
-            },
-            dateInput: {
-              marginLeft: 36,
-            },
-          }}
-          onDateChange={e => handleInputChange({...input, birthDay: e})}
-        />
+        {isEdit === false && (
+          <DatePicker
+            style={{width: 400}}
+            date={input.birthDay}
+            mode="date"
+            placeholder="Ngày sinh"
+            format="YYYY-MM-DD"
+            confirmBtnText="Lưu Lại"
+            cancelBtnText="Huỷ"
+            customStyles={{
+              dateIcon: {
+                position: 'absolute',
+                left: 0,
+                top: 4,
+                marginLeft: 0,
+              },
+              dateInput: {
+                marginLeft: 36,
+              },
+            }}
+            onDateChange={e => handleInputChange({...input, birthDay: e})}
+          />
+        )}
         <Item floatingLabel style={{margin: 20, padding: 5}}>
           <Label>Ghi chú</Label>
           <Input

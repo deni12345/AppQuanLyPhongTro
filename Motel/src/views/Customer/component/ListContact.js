@@ -5,9 +5,10 @@ import {Container, ListItem, Text, View, Button} from 'native-base';
 import Swipeout from 'react-native-swipeout';
 import {get} from 'lodash';
 import moment from 'moment';
-import * as API from '../../../apis/customer';
+import * as API from '../../../apis/customer';
+
 export default function ListItems(props) {
-  const {contacts, navigation, customers, motels} = props;
+  const {contacts, navigation, customers, motels, actions} = props;
 
   const Item = ({item, index}) => {
     const setting = {
@@ -26,6 +27,7 @@ export default function ListItems(props) {
             try {
               let res = {};
               res = await API.deleteContacts(item);
+              await actions.fetchAllContacts();
               console.log(res);
             } catch (err) {
               console.log('errros', err);
@@ -79,6 +81,8 @@ export default function ListItems(props) {
             return <Item item={item} index={index} />;
           }}
           keyExtractor={item => item.id}
+          onEndThreshold={0}
+          onEndReached={() => actions.fetchAllContacts()}
         />
       </SafeAreaView>
     </Container>

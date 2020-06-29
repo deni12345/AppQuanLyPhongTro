@@ -1,6 +1,6 @@
 import {call, put} from 'redux-saga/effects';
 import * as actions from '../actions';
-import * as API from '../../../apis/customer';
+import * as API from '../../../apis/customer';
 import {takeAction} from '../../../services/forkActionSagas';
 
 export function* handlefetchAllCustomers(action) {

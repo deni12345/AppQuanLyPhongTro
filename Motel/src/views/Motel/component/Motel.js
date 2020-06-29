@@ -32,7 +32,7 @@ export default function CardMotesl(props) {
             <Button
               onPress={() => {
                 actions.clear();
-                navigation.push('CreateMotel');
+                navigation.push('CreateMotel', {data: {}});
               }}>
               <Text>thêm phòng</Text>
             </Button>

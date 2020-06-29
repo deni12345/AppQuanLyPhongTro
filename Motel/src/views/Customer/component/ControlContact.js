@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, Fragment} from 'react';
 import {
   Container,
   Card,
@@ -16,9 +16,8 @@ import ImagePicker from 'react-native-image-picker';
 import Select from 'react-native-picker-select';
 import {View} from 'react-native';
 import {get, isEmpty, filter} from 'lodash';
-import * as API from '../../../apis/customer';
+import * as API from '../../../apis/customer';
 import {firebasesApp} from '../../../services/configFireBase';
-// import firebase, {storage} from 'firebase';
 export default function CardMotesl(props) {
   const initState = {
     name: '',
@@ -39,6 +38,7 @@ export default function CardMotesl(props) {
         res = await API.createContacts(input);
       }
       console.log('success', res.data);
+      navigation.push('Customer', {newData: res.data});
     } catch (err) {
       console.log('errros', err);
     }
@@ -63,7 +63,6 @@ export default function CardMotesl(props) {
     })),
     e => isEmpty(e.label) !== true,
   );
-  // .filter(e => isEmpty(e.label) !== true);
   const customersOption = filter(
     customers.map(o => ({
       label: o.name,
@@ -71,7 +70,6 @@ export default function CardMotesl(props) {
     })),
     e => isEmpty(e.label) !== true,
   );
-  // .filter(e => isEmpty(e.label) !== true);
 
   const handleImage = () => {
     const options = {
@@ -96,47 +94,47 @@ export default function CardMotesl(props) {
     });
   };
 
- // upload file len firebase
- const UploadImage = uri => {
-  //   ImgToBase64.getBase64String(uri)
-  // .then( async(base64String) => {
-  //   const image = await firebasesApp.storage().ref().put(uri);
-  //   console.log("firebase",image)
-  //   })
-  // .catch(err => console.log(err));
+  // upload file len firebase
+  const UploadImage = uri => {
+    //   ImgToBase64.getBase64String(uri)
+    // .then( async(base64String) => {
+    //   const image = await firebasesApp.storage().ref().put(uri);
+    //   console.log("firebase",image)
+    //   })
+    // .catch(err => console.log(err));
 
-  const fileExtension = uri.split('.').pop();
-  // let uuid = uuid();
-  // console.log("exit", uuid)
-  // const fileName = `${uuid}.${fileExtension}`;
-  const uploadTask = firebasesApp
-    .storage()
-    .ref(`image/${uri}`)
-    .put(uri);
-  uploadTask.on(
-    'state_changed',
-    snapshot => {},
-    error => console.log(error),
-    () => {
-      firebasesApp.storage
-        .ref('image')
-        .child(uri)
-        .getDownloadURL()
-        .then(url => {
-          console.log('firebase', JSON.stringify(url) );
-        });
-    },
-  );
-};
+    const fileExtension = uri.split('.').pop();
+    // let uuid = uuid();
+    // console.log("exit", uuid)
+    // const fileName = `${uuid}.${fileExtension}`;
+    const uploadTask = firebasesApp
+      .storage()
+      .ref(`image/${uri}`)
+      .put(uri);
+    uploadTask.on(
+      'state_changed',
+      snapshot => {},
+      error => console.log(error),
+      () => {
+        firebasesApp.storage
+          .ref('image')
+          .child(uri)
+          .getDownloadURL()
+          .then(url => {
+            console.log('firebase', JSON.stringify(url));
+          });
+      },
+    );
+  };
 
-console.log(input.linkFile);
+  console.log(input.linkFile);
   return (
     <Container>
       <Card>
         {input.linkFile !== '' && (
           <Item floatingLabel style={{margin: 20, padding: 5, marginLeft: 5}}>
-          <Image source={{uri: input.linkFile}} style={{flex: 1}} />
-        </Item>
+            <Image source={{uri: input.linkFile}} style={{flex: 1}} />
+          </Item>
         )}
         <Item floatingLabel style={{margin: 20, padding: 5, marginLeft: 5}}>
           <Label>Tên tìm kiếm cho Hợp Đồng</Label>
@@ -146,30 +144,36 @@ console.log(input.linkFile);
             onChangeText={e => handleInputChange({...input, name: e})}
           />
         </Item>
-        <View style={{margin: 20, padding: 5}}>
-          <Label>Chọn Phòng</Label>
-          <Select
-            // value={get(
-            //   find(motelsOption, o => o.value === input.motelId),
-            //   'label',
-            //   '',
-            // )}
-            onValueChange={e => handleInputChange({...input, motelId: e})}
-            items={motelsOption}
-          />
-        </View>
-        <View style={{margin: 20, padding: 5}}>
-          <Label>Chọn Khach Hàng</Label>
-          <Select
-            // value={get(
-            //   find(customersOption, o => o.value === input.motelId),
-            //   'label',
-            //   '',
-            // )}
-            onValueChange={e => handleInputChange({...input, customerId: e})}
-            items={customersOption}
-          />
-        </View>
+        {isEdit === false && (
+          <Fragment>
+            <View style={{margin: 20, padding: 5}}>
+              <Label>Chọn Phòng</Label>
+              <Select
+                // value={get(
+                //   find(motelsOption, o => o.value === input.motelId),
+                //   'label',
+                //   '',
+                // )}
+                onValueChange={e => handleInputChange({...input, motelId: e})}
+                items={motelsOption}
+              />
+            </View>
+            <View style={{margin: 20, padding: 5}}>
+              <Label>Chọn Khách Hàng</Label>
+              <Select
+                // value={get(
+                //   find(customersOption, o => o.value === input.motelId),
+                //   'label',
+                //   '',
+                // )}
+                onValueChange={e =>
+                  handleInputChange({...input, customerId: e})
+                }
+                items={customersOption}
+              />
+            </View>
+          </Fragment>
+        )}
         <CardItem style={{display: 'flex', justifyContent: 'space-around'}}>
           <Button rounded primary onPress={() => handleSave()}>
             <Text>Lưu lại</Text>
@@ -177,9 +181,9 @@ console.log(input.linkFile);
           <Button rounded primary onPress={() => navigation.goBack()}>
             <Text>Quay Lại</Text>
           </Button>
-          <Button rounded primary onPress={() => handleImage()}>
+          {/* <Button rounded primary onPress={() => handleImage()}>
             <Text>Upload Image</Text>
-          </Button>
+          </Button> */}
         </CardItem>
       </Card>
     </Container>

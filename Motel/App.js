@@ -18,8 +18,11 @@ import CreateMotel from './src/views/Motel/component/CreateMotel';
 //customer
 import ControlContact from './src/views/Customer/component/ControlContact';
 import ControlCustomer from './src/views/Customer/component/ControlCustomer';
+
 //home
 import ControlPayment from './src/views/Home/component/ControlPayment';
+import ControlReceipt from './src/views/Home/component/ControlReceipt';
+
 const Tab = createBottomTabNavigator();
 
 const HomeStack = createStackNavigator();
@@ -30,17 +33,18 @@ function HomeStackScreen({navigation, props}) {
       <HomeStack.Screen
         name="Home"
         component={Home}
-        options={{
-          headerLeft: () => (
-            <Button
-              onPress={() => navigation.toggleDrawer()}
-              title="Menu"
-              color="#000"
-            />
-          ),
-        }}
+        // options={{
+        //   headerLeft: () => (
+        //     <Button
+        //       onPress={() => navigation.toggleDrawer()}
+        //       title="Menu"
+        //       color="#000"
+        //     />
+        //   ),
+        // }}
       />
-    <CustomerStack.Screen name="controlPayment" component={ControlPayment} />
+      <CustomerStack.Screen name="controlPayment" component={ControlPayment} />
+      <CustomerStack.Screen name="ControlReceipt" component={ControlReceipt} />
     </HomeStack.Navigator>
   );
 }
@@ -53,15 +57,15 @@ function MotelStackScreen({navigation, props}) {
       <MotelStack.Screen
         name="Motel"
         component={Motel}
-        options={{
-          headerLeft: () => (
-            <Button
-              onPress={() => navigation.toggleDrawer()}
-              title="Menu"
-              color="#000"
-            />
-          ),
-        }}
+        // options={{
+        //   headerLeft: () => (
+        //     <Button
+        //       onPress={() => navigation.toggleDrawer()}
+        //       title="Menu"
+        //       color="#000"
+        //     />
+        //   ),
+        // }}
       />
       <MotelStack.Screen name="CreateMotel" component={CreateMotel} />
     </MotelStack.Navigator>
@@ -76,15 +80,15 @@ function CustomerStackScreen({navigation, props}) {
       <CustomerStack.Screen
         name="Customer"
         component={Customer}
-        options={{
-          headerLeft: () => (
-            <Button
-              onPress={() => navigation.toggleDrawer()}
-              title="Menu"
-              color="#000"
-            />
-          ),
-        }}
+        // options={{
+        //   headerLeft: () => (
+        //     <Button
+        //       onPress={() => navigation.toggleDrawer()}
+        //       title="Menu"
+        //       color="#000"
+        //     />
+        //   ),
+        // }}
       />
       <CustomerStack.Screen name="controlContact" component={ControlContact} />
       <CustomerStack.Screen
@@ -103,20 +107,18 @@ function LoginStackScreen({navigation, props}) {
       <LoginStack.Screen
         name="Login"
         component={Login}
-        options={{
-          headerLeft: () => (
-            <Button
-              onPress={() => navigation.toggleDrawer()}
-              title="Menu"
-              color="#000"
-            />
-          ),
-        }}
+        // options={{
+        //   headerLeft: () => (
+        //     <Button
+        //       onPress={() => navigation.toggleDrawer()}
+        //       title="Menu"
+        //       color="#000"
+        //     />
+        //   ),
+        // }}
       />
       <LoginStack.Screen name="Home" component={Home} />
-      <LoginStack.Screen name="Motel" component={Motel} />
-      <LoginStack.Screen name="Customer" component={Customer} />
-      <CustomerStack.Screen name="controlContact" component={ControlContact} />
+      <CustomerStack.Screen name="Customer" component={ControlContact} />
     </LoginStack.Navigator>
   );
 }
@@ -141,7 +143,7 @@ export default class App extends PureComponent {
         <Fragment>
           <NavigationContainer>
             {/* <Drawer.Navigator initialRouteName="Home"> */}
-              {/* <Drawer.Screen name="AppPage" component={AppPage} /> */}
+            {/* <Drawer.Screen name="AppPage" component={AppPage} /> */}
             {/* </Drawer.Navigator> */}
             <AppPage />
           </NavigationContainer>
