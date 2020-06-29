@@ -9,15 +9,14 @@ import {
   Button,
   Text,
 } from 'native-base';
-import DatePicker from 'react-native-datepicker';
 
 import {get, isEmpty} from 'lodash';
 import * as API from '../../../apis/home';
 export default function CardMotesl(props) {
-  const initState = {
+  let initState = {
     name: String,
-    quantityPower: String,
-    quantityWater: String,
+    quantityPower: Number,
+    quantityWater: Number,
     prices: Number,
     pricesOther: Number,
   };
@@ -38,52 +37,72 @@ export default function CardMotesl(props) {
   };
   const {navigation, route} = props;
   useEffect(() => {
+    const {
+      name,
+      quantityPower,
+      quantityWater,
+      prices,
+      pricesOther,
+    } = route.params.data;
     if (isEmpty(get(route, 'params.data', ''))) {
       handleInputChange({...initState});
       setEdit(false);
     } else {
-      handleInputChange({...route.params.data});
+      handleInputChange({
+        name,
+        quantityPower: JSON.stringify(quantityPower),
+        quantityWater: JSON.stringify(quantityPower),
+        prices: JSON.stringify(prices),
+        pricesOther: JSON.stringify(pricesOther),
+      });
       setEdit(true);
     }
   }, [props]);
+
   return (
     <Container>
       <Card>
         <Item floatingLabel style={{margin: 20, padding: 5}}>
-          <Label>Tên Khách Hàng</Label>
+          <Label>Tên phiếu chi</Label>
           <Input
             placeholder="name"
             value={input.name}
             onChangeText={e => handleInputChange({...input, name: e})}
           />
         </Item>
-        <DatePicker
-          style={{width: 400}}
-          date={input.birthDay}
-          mode="date"
-          placeholder="Ngày sinh"
-          format="DD-MM-YYYY"
-          confirmBtnText="Lưu Lại"
-          cancelBtnText="Huỷ"
-          customStyles={{
-            dateIcon: {
-              position: 'absolute',
-              left: 0,
-              top: 4,
-              marginLeft: 0,
-            },
-            dateInput: {
-              marginLeft: 36,
-            },
-          }}
-          onDateChange={e => handleInputChange({...input, birthDay: e})}
-        />
         <Item floatingLabel style={{margin: 20, padding: 5}}>
-          <Label>Ghi chú</Label>
+          <Label>Số điện hiện tại</Label>
           <Input
-            placeholder="note"
-            value={input.note}
-            onChangeText={e => handleInputChange({...input, note: e})}
+            keyboardType="number-pad"
+            placeholder="Số điện hiện tại"
+            value={input.quantityPower}
+            onChangeText={e => handleInputChange({...input, quantityPower: e})}
+          />
+        </Item>
+        <Item floatingLabel style={{margin: 20, padding: 5}}>
+          <Label>Số nước hiện tại</Label>
+          <Input
+            keyboardType="number-pad"
+            placeholder="Số nước hiện tại"
+            value={input.quantityWater}
+            onChangeText={e => handleInputChange({...input, quantityWater: e})}
+          />
+        </Item>
+        <Item floatingLabel style={{margin: 20, padding: 5}}>
+          <Label>Giá Phòng</Label>
+          <Input
+            keyboardType="number-pad"
+            placeholder="Phí thu"
+            value={input.prices}
+            onChangeText={e => handleInputChange({...input, prices: e})}
+          />
+        </Item>
+        <Item floatingLabel style={{margin: 20, padding: 5}}>
+          <Label>Phí khác</Label>
+          <Input
+            placeholder="Phí khác"
+            value={input.pricesOther}
+            onChangeText={e => handleInputChange({...input, pricesOther: e})}
           />
         </Item>
         <CardItem style={{display: 'flex', justifyContent: 'space-around'}}>

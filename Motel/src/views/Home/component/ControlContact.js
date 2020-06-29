@@ -1,5 +1,3 @@
-/* eslint-disable react-native/no-inline-styles */
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, {useState, useEffect} from 'react';
 import {
   Container,
@@ -63,7 +61,6 @@ export default function CardMotesl(props) {
     })),
     e => isEmpty(e.label) !== true,
   );
-  // .filter(e => isEmpty(e.label) !== true);
   const customersOption = filter(
     customers.map(o => ({
       label: o.name,
@@ -71,7 +68,6 @@ export default function CardMotesl(props) {
     })),
     e => isEmpty(e.label) !== true,
   );
-  // .filter(e => isEmpty(e.label) !== true);
 
   const handleImage = () => {
     const options = {
@@ -96,47 +92,47 @@ export default function CardMotesl(props) {
     });
   };
 
- // upload file len firebase
- const UploadImage = uri => {
-  //   ImgToBase64.getBase64String(uri)
-  // .then( async(base64String) => {
-  //   const image = await firebasesApp.storage().ref().put(uri);
-  //   console.log("firebase",image)
-  //   })
-  // .catch(err => console.log(err));
+  // upload file len firebase
+  const UploadImage = uri => {
+    //   ImgToBase64.getBase64String(uri)
+    // .then( async(base64String) => {
+    //   const image = await firebasesApp.storage().ref().put(uri);
+    //   console.log("firebase",image)
+    //   })
+    // .catch(err => console.log(err));
 
-  const fileExtension = uri.split('.').pop();
-  // let uuid = uuid();
-  // console.log("exit", uuid)
-  // const fileName = `${uuid}.${fileExtension}`;
-  const uploadTask = firebasesApp
-    .storage()
-    .ref(`image/${uri}`)
-    .put(uri);
-  uploadTask.on(
-    'state_changed',
-    snapshot => {},
-    error => console.log(error),
-    () => {
-      firebasesApp.storage
-        .ref('image')
-        .child(uri)
-        .getDownloadURL()
-        .then(url => {
-          console.log('firebase', JSON.stringify(url) );
-        });
-    },
-  );
-};
+    const fileExtension = uri.split('.').pop();
+    // let uuid = uuid();
+    // console.log("exit", uuid)
+    // const fileName = `${uuid}.${fileExtension}`;
+    const uploadTask = firebasesApp
+      .storage()
+      .ref(`image/${uri}`)
+      .put(uri);
+    uploadTask.on(
+      'state_changed',
+      snapshot => {},
+      error => console.log(error),
+      () => {
+        firebasesApp.storage
+          .ref('image')
+          .child(uri)
+          .getDownloadURL()
+          .then(url => {
+            console.log('firebase', JSON.stringify(url) );
+          });
+      },
+    );
+  };
 
-console.log(input.linkFile);
+  console.log(input.linkFile);
   return (
     <Container>
       <Card>
         {input.linkFile !== '' && (
           <Item floatingLabel style={{margin: 20, padding: 5, marginLeft: 5}}>
-          <Image source={{uri: input.linkFile}} style={{flex: 1}} />
-        </Item>
+            <Image source={{uri: input.linkFile}} style={{flex: 1}} />
+          </Item>
         )}
         <Item floatingLabel style={{margin: 20, padding: 5, marginLeft: 5}}>
           <Label>Tên tìm kiếm cho Hợp Đồng</Label>

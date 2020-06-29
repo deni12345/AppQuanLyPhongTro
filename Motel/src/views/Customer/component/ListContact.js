@@ -5,6 +5,7 @@ import {Container, ListItem, Text, View, Button} from 'native-base';
 import Swipeout from 'react-native-swipeout';
 import {get} from 'lodash';
 import moment from 'moment';
+import * as API from '../../../apis/customer';
 export default function ListItems(props) {
   const {contacts, navigation, customers, motels} = props;
 
@@ -19,13 +20,21 @@ export default function ListItems(props) {
           type: 'primary',
         },
       ],
-      // left: [
-      //   {
-      //     onPress: () => navigation.push('controlContact', {customers, motels}),
-      //     text: 'Thêm khách hàng',
-      //     type: 'primary',
-      //   },
-      // ],
+      left: [
+        {
+          onPress: async () => {
+            try {
+              let res = {};
+              res = await API.deleteContacts(item);
+              console.log(res);
+            } catch (err) {
+              console.log('errros', err);
+            }
+          },
+          text: 'Xoá',
+          type: 'delete',
+        },
+      ],
     };
     return (
       <Swipeout {...setting}>

@@ -18,7 +18,8 @@ import CreateMotel from './src/views/Motel/component/CreateMotel';
 //customer
 import ControlContact from './src/views/Customer/component/ControlContact';
 import ControlCustomer from './src/views/Customer/component/ControlCustomer';
-
+//home
+import ControlPayment from './src/views/Home/component/ControlPayment';
 const Tab = createBottomTabNavigator();
 
 const HomeStack = createStackNavigator();
@@ -39,7 +40,7 @@ function HomeStackScreen({navigation, props}) {
           ),
         }}
       />
-      <HomeStack.Screen name="Login" component={Login} />
+    <CustomerStack.Screen name="controlPayment" component={ControlPayment} />
     </HomeStack.Navigator>
   );
 }
@@ -115,6 +116,7 @@ function LoginStackScreen({navigation, props}) {
       <LoginStack.Screen name="Home" component={Home} />
       <LoginStack.Screen name="Motel" component={Motel} />
       <LoginStack.Screen name="Customer" component={Customer} />
+      <CustomerStack.Screen name="controlContact" component={ControlContact} />
     </LoginStack.Navigator>
   );
 }
